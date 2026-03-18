@@ -43,6 +43,8 @@ int main(void) {
 				break;
 			case '3':
 				show_all_rooms();
+				printf("\nApasati ENTER pentru a continua...");
+				while (getchar() != '\n');
 				break;
 			case '4':
 				current_menu = SEARCH_ROOM_MENU;
@@ -65,6 +67,8 @@ int main(void) {
 				break;
 			case '2':
 				show_all_reservations();
+				printf("\nApasati ENTER pentru a continua...");
+				while (getchar() != '\n');
 				break;
 			case '3':
 				current_menu = CANCEL_RESERVATION_MENU;
