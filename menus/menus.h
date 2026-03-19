@@ -28,7 +28,7 @@ void show_cancel_reservation_menu();
 void show_search_room_by_name_menu();
 void show_search_room_by_capacity_menu();
 void show_search_room_by_availability_menu();
-void read_option_and_show_menu(char *, void (*)(void));
+void read_option_and_show_menu(char *option, void (*fn)(void));
 void show_invalid_option();
 void show_all_rooms();
 void show_all_reservations();
