@@ -2,11 +2,10 @@
 #include "menus/menus.h"
 #include <stdio.h>
 
-
 int main(void) {
 	char option;
 	MenuState current_menu = MAIN_MENU;
-	
+
 	while (current_menu != EXIT_PROGRAM) {
 		switch (current_menu) {
 		case MAIN_MENU:
@@ -14,9 +13,9 @@ int main(void) {
 			switch (option) {
 				case '1': current_menu = ROOM_MANAGEMENT_MENU; break;
 				case '2': current_menu = RESERVATION_MANAGEMENT_MENU; break;
-				case 'x':
-					current_menu = EXIT_PROGRAM;
-					printf("Programul s-a terminat!\n");
+				case 'x': 
+					current_menu = EXIT_PROGRAM; 
+					printf("Programul s-a terminat!"); 
 					break;
 				default: show_invalid_option(); break;
 			}
@@ -28,8 +27,7 @@ int main(void) {
 				case '2': current_menu = DELETE_ROOM_MENU; break;
 				case '3':
 					show_all_rooms();
-					printf("\nApasati ENTER pentru a continua...");
-					while (getchar() != '\n');
+					pause_and_continue();
 					break;
 				case '4': current_menu = SEARCH_ROOM_MENU; break;
 				case 'x': current_menu = MAIN_MENU; break;
@@ -42,8 +40,7 @@ int main(void) {
 				case '1': current_menu = RESERVE_ROOM_MENU; break;
 				case '2':
 					show_all_reservations();
-					printf("\nApasati ENTER pentru a continua...");
-					while (getchar() != '\n');
+					pause_and_continue();
 					break;
 				case '3': current_menu = CANCEL_RESERVATION_MENU; break;
 				case 'x': current_menu = MAIN_MENU; break;

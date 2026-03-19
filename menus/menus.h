@@ -32,5 +32,6 @@ void read_option_and_show_menu(char *option, void (*fn)(void));
 void show_invalid_option();
 void show_all_rooms();
 void show_all_reservations();
+void pause_and_continue();
 
 #endif

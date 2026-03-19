@@ -137,7 +137,7 @@ void show_invalid_option() {
 	while (getchar() != '\n');
 }
 
-void read_option_and_show_menu(char *option, void (*fn)()) {
+void read_option_and_show_menu(char *option, void (*fn)(void)) {
 	fn();
 	scanf("%c", option);
 	char next = getchar();
@@ -147,6 +147,15 @@ void read_option_and_show_menu(char *option, void (*fn)()) {
 	}
 }
 
-void show_all_rooms() {}
+void show_all_rooms() {
+	printf("Functionalitatea nu este implementata...");
+}
 
-void show_all_reservations() {}
+void show_all_reservations() {
+	printf("Functionalitatea nu este implementata...");
+}
+
+void pause_and_continue() {
+	printf("\nApasati ENTER pentru a continua...");
+	while (getchar() != '\n');
+}
