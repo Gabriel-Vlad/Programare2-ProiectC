@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "menus.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -129,3 +130,23 @@ void show_cancel_reservation_menu() {
 	printf("----------------------------------------\n");
 	printf("Alegeti optiunea: ");
 }
+
+void show_invalid_option() {
+	printf("Optiune invalida!\n");
+	printf("\nApasati ENTER pentru a continua...");
+	while (getchar() != '\n');
+}
+
+void read_option_and_show_menu(char *option, void (*fn)()) {
+	fn();
+	scanf("%c", option);
+	char next = getchar();
+	if (next != '\n') {
+		while(getchar() != '\n');
+		*option = 0;
+	}
+}
+
+void show_all_rooms() {}
+
+void show_all_reservations() {}
