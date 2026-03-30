@@ -106,6 +106,8 @@ int main(void) {
 				default: show_invalid_option(); break;
 			}
 			break;
+		case EXIT_PROGRAM:
+			{}
 		}
 	}
 

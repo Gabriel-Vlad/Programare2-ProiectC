@@ -84,6 +84,7 @@ void show_search_room_by_name_menu() {
 	printf("----------------------------------------\n");
 	printf("          CAUTARE SALA DUPA NUME\n");
 	printf("----------------------------------------\n");
+	printf("Introduceti numele salii: <nume_sala>\n");
 	printf("[x] Inapoi\n");
 	printf("----------------------------------------\n");
 	printf("Alegeti optiunea: ");
@@ -94,6 +95,7 @@ void show_search_room_by_capacity_menu() {
 	printf("----------------------------------------\n");
 	printf("     CAUTARE SALA DUPA CAPACITATE\n");
 	printf("----------------------------------------\n");
+	printf("Introduceti capacitatea salii: <capacitate>\n");
 	printf("[x] Inapoi\n");
 	printf("----------------------------------------\n");
 	printf("Alegeti optiunea: ");
@@ -104,6 +106,7 @@ void show_search_room_by_availability_menu() {
 	printf("----------------------------------------\n");
 	printf("  CAUTARE SALA DUPA DISPONIBILITATE\n");
 	printf("----------------------------------------\n");
+	printf("Introduceti disponibilitatea salii: <disponibilitate>(true/false)\n");
 	printf("[x] Inapoi\n");
 	printf("----------------------------------------\n");
 	printf("Alegeti optiunea: ");
@@ -114,7 +117,7 @@ void show_reserve_room_menu() {
 	printf("----------------------------------------\n");
 	printf("            REZERVARE SALA\n");
 	printf("----------------------------------------\n");
-	printf("Introduceti datele rezervarii: <ora> <ziua> <data>\n");
+	printf("Introduceti datele rezervarii: <nume_sala> <ora> <data>(DD/MM/YYYY)\n");
 	printf("[x] Inapoi\n");
 	printf("----------------------------------------\n");
 	printf("Alegeti optiunea: ");
