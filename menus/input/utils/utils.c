@@ -1,11 +1,12 @@
 #include "utils.h"
+#include "../../colors.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 int error_msg(char *msg) {
     if(msg != NULL) {
-        printf("%s", msg);
-        printf("\nApasa ENTER pentru a continua...");
+        printf(COLOR_ERROR "%s" RESET, msg);
+        printf(COLOR_INFO "\nApasa ENTER pentru a continua..." RESET);
         getchar();
     }
     return -1;
@@ -18,8 +19,8 @@ bool is_pure_number(char *buffer) {
 }
 
 int success_msg(char *msg, bool afiseaza) {
-    if(afiseaza == true) { printf("%s", msg); }
-    printf("\nApasa ENTER pentru a continua..."); 
+    if(afiseaza == true) { printf(COLOR_SUCCESS "%s" RESET, msg); }
+    printf(COLOR_INFO "\nApasa ENTER pentru a continua..." RESET); 
     getchar();
     return 0;
 }

@@ -2,6 +2,7 @@
 #include "rezervations.h"
 #include "../halls/halls.h"
 #include "../../menus/display/display.h"
+#include "../../menus/colors.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -43,18 +44,18 @@ void add_rezervation(ListRezervari *ls_rez, ListSali *ls_sali, char *nume_sala, 
     }
 
     if(hall_to_reserve == NULL) {
-        printf("Nu exista sala cu numele introdus\n");
+        printf(COLOR_WARNING "Nu exista sala cu numele introdus\n" RESET);
         return;
     }
 
     if(hall_to_reserve->esteDisponibila == false) {
-        printf("Sala este deja rezervata\n");
+        printf(COLOR_WARNING "Sala este deja rezervata\n" RESET);
         return;
     }
 
     Rezervare *nou = (Rezervare *)malloc(sizeof(Rezervare));
     if(nou == NULL) {
-        printf("Nu s-a putut aloca memorie pentru o rezervare noua");
+        printf(COLOR_ERROR "Nu s-a putut aloca memorie pentru o rezervare noua" RESET);
         return;
     }
 
@@ -81,12 +82,12 @@ void add_rezervation(ListRezervari *ls_rez, ListSali *ls_sali, char *nume_sala, 
 
 void cancel_rezervation(ListRezervari *ls_rez, ListSali *ls_sali, int id) {
     if(id < 1 || id > ls_rez->size) {
-        printf("ID invalid");
+        printf(COLOR_ERROR "ID invalid" RESET);
         return;
     }
 
     if(ls_rez->size == 0) {
-        printf("Nu exista rezervari");
+        printf(COLOR_WARNING "Nu exista rezervari" RESET);
         return;
     }
 
@@ -159,7 +160,7 @@ void cancel_rezervations_by_hall_name(ListRezervari *ls_rez, char *nume_sala) {
 
 void display_rezervations(ListRezervari *ls_rez) {
     if(ls_rez->size == 0) {
-        printf("Nu exista rezervari de afisat\n");
+        printf(COLOR_WARNING "Nu exista rezervari de afisat\n" RESET);
         return;
     }
 

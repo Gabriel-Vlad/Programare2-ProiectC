@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "menus/menus.h"
+#include "menus/colors.h"
 #include "models/rezervations/rezervations.h"
 #include "models/halls/halls.h"
 #include "menus/input/halls/halls_input.h"
@@ -19,7 +20,7 @@ int main(void) {
 				case '2': current_menu = RESERVATION_MANAGEMENT_MENU; break;
 				case 'x': 
 					current_menu = EXIT_PROGRAM; 
-					printf("Programul s-a terminat!\n"); 
+					printf(COLOR_SUCCESS "\nProgramul s-a terminat!\n" RESET); 
 					break;
 				default: show_invalid_option(); break;
 			}
