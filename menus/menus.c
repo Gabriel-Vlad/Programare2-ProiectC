@@ -49,7 +49,7 @@ void show_add_room_menu() {
 	printf("----------------------------------------\n");
 	printf("             ADAUGARE SALA\n");
 	printf("----------------------------------------\n");
-	printf("Introduceti datele salii: <nume> <capacitate> <disponibilitate>\n");
+	printf("Introduceti datele salii: <nume_sala> <capacitate> <disponibilitate>\n");
 	printf("[x] Inapoi\n");
 	printf("----------------------------------------\n");
 	printf("Alegeti optiunea: ");
@@ -60,7 +60,7 @@ void show_delete_room_menu() {
 	printf("----------------------------------------\n");
 	printf("             STERGERE SALA\n");
 	printf("----------------------------------------\n");
-	printf("Introduceti ID-ul salii de sters: <id>\n");
+	printf("Introduceti ID-ul salii de sters: <ID>\n");
 	printf("[x] Inapoi\n");
 	printf("----------------------------------------\n");
 	printf("Alegeti optiunea: ");
@@ -128,7 +128,7 @@ void show_cancel_reservation_menu() {
 	printf("----------------------------------------\n");
 	printf("          ANULARE REZERVARE\n");
 	printf("----------------------------------------\n");
-	printf("Introduceti ID-ul rezervarii de anulat: <id>\n");
+	printf("Introduceti ID-ul rezervarii de anulat: <ID>\n");
 	printf("[x] Inapoi\n");
 	printf("----------------------------------------\n");
 	printf("Alegeti optiunea: ");

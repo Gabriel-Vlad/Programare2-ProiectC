@@ -1,5 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "menus/menus.h"
+#include "config/rezervari/rezervari.h"
+#include "config/sali/sali.h"
 #include <stdio.h>
 
 int main(void) {
