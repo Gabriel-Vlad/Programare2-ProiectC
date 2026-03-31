@@ -23,7 +23,7 @@ typedef struct listsali {
 } ListSali;
 
 // adauga o sala la finalul listei
-void add_hall(ListSali *ls_sali, char *nume_sala, int capacitate);
+void add_hall(ListSali *ls_sali, char *nume_sala, int capacitate, bool esteDisponibila);
 
 // sterge o sala de la inceputul listei
 void remove_hall_beginning(ListSali *ls_sali, ListRezervari *ls_rez);

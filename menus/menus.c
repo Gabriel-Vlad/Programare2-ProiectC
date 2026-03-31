@@ -49,7 +49,7 @@ void show_add_room_menu() {
 	printf("----------------------------------------\n");
 	printf("             ADAUGARE SALA\n");
 	printf("----------------------------------------\n");
-	printf("Introduceti datele salii: <nume_sala> <capacitate> <disponibilitate>\n");
+	printf("Introduceti datele salii: <nume_sala> <capacitate> <disponibilitate>(Y/N)\n");
 	printf("[x] Inapoi\n");
 	printf("----------------------------------------\n");
 	printf("Alegeti optiunea: ");
@@ -106,7 +106,7 @@ void show_search_room_by_availability_menu() {
 	printf("----------------------------------------\n");
 	printf("  CAUTARE SALA DUPA DISPONIBILITATE\n");
 	printf("----------------------------------------\n");
-	printf("Introduceti disponibilitatea salii: <disponibilitate>(true/false)\n");
+	printf("Introduceti disponibilitatea salii: <disponibilitate>(Y/N)\n");
 	printf("[x] Inapoi\n");
 	printf("----------------------------------------\n");
 	printf("Alegeti optiunea: ");

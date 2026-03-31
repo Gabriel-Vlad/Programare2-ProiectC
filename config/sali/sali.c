@@ -6,18 +6,17 @@
 #include <string.h>
 #include <stdbool.h>
 
-void add_hall(ListSali *ls_sali, char *nume_sala, int capacitate) {
+void add_hall(ListSali *ls_sali, char *nume_sala, int capacitate, bool esteDisponibila) {
     Sala *nou = (Sala *)malloc(sizeof(Sala));
     if(nou == NULL) {
         printf("Cannot allocate memory for a new hall");
         return;
     }
-    ls_sali->size++;
-    nou->id = ls_sali->size;
+
     nou->nume_sala = malloc(strlen(nume_sala) + 1);
     strcpy(nou->nume_sala, nume_sala);
     nou->capacitate = capacitate;
-    nou->esteDisponibila = true;
+    nou->esteDisponibila = esteDisponibila;
     nou->next = NULL;
     
     if(ls_sali->size == 0) {
@@ -25,7 +24,10 @@ void add_hall(ListSali *ls_sali, char *nume_sala, int capacitate) {
         ls_sali->tail = nou;
     } else {
         ls_sali->tail->next = nou;
+        ls_sali->tail = nou;
     }
+    ls_sali->size++;
+    nou->id = ls_sali->size;
 }
 
 void remove_hall_beginning(ListSali *ls_sali, ListRezervari *ls_rez) {
@@ -122,9 +124,9 @@ void find_hall_by_name(ListSali *ls_sali, char *nume_sala) {
     }
 
     if(gasit == NULL) {
-        printf("Nu exista sala cu numele %s", nume_sala);
+        printf("Nu exista sala cu numele %s\n", nume_sala);
     } else {
-        printf("%d %s", gasit->id, gasit->nume_sala);
+        printf("%d %s %d %d\n", gasit->id, gasit->nume_sala, gasit->capacitate, gasit->esteDisponibila);
     }
 }
 
@@ -150,7 +152,8 @@ void find_hall_by_capacity(ListSali *ls_sali, int capacitate) {
 
 void find_hall_by_availability(ListSali *ls_sali, bool esteDisponibila) {
      if(ls_sali->size == 0) {
-        printf("Lista de sali este goala");
+        printf("Lista de sali este goala\n");
+        printf("Press ENTER to continue");
         return;
     }
 
@@ -163,7 +166,8 @@ void find_hall_by_availability(ListSali *ls_sali, bool esteDisponibila) {
     }
 
     if(gasit == false) {
-        printf("Nu exista sala cu disponibilitatea %d", esteDisponibila);
+        printf("Nu exista sala cu disponibilitatea %d\n", esteDisponibila);
+        printf("Press ENTER to continue...");
     }
 }
 
@@ -174,6 +178,6 @@ void display_halls(ListSali *ls_sali) {
         return;
     }
     for(Sala *tmp = ls_sali->head; tmp != NULL; tmp = tmp->next) {
-        printf("%d %s\n", tmp->id, tmp->nume_sala);
+        printf("%d %s %d %d\n", tmp->id, tmp->nume_sala, tmp->capacitate, tmp->esteDisponibila);
     }
 }

@@ -26,12 +26,14 @@ void add_rezervation(ListRezervari *ls_rez, ListSali *ls_sali, char *nume_sala, 
     }
 
     if(hall_to_reserve == NULL) {
-        printf("Nu exista sala cu numele introdus");
+        printf("Nu exista sala cu numele introdus\n");
+        printf("Press ENTER to continue...");
         return;
     }
 
     if(hall_to_reserve->esteDisponibila == false) {
-        printf("Sala este deja rezervata");
+        printf("Sala este deja rezervata\n");
+        printf("Press ENTER to continue...");
         return;
     }
 
