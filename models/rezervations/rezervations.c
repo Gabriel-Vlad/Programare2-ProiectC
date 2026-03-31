@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "rezervari.h"
-#include "../sali/sali.h"
+#include "rezervations.h"
+#include "../halls/halls.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -27,13 +27,11 @@ void add_rezervation(ListRezervari *ls_rez, ListSali *ls_sali, char *nume_sala, 
 
     if(hall_to_reserve == NULL) {
         printf("Nu exista sala cu numele introdus\n");
-        printf("Press ENTER to continue...");
         return;
     }
 
     if(hall_to_reserve->esteDisponibila == false) {
         printf("Sala este deja rezervata\n");
-        printf("Press ENTER to continue...");
         return;
     }
 
@@ -64,59 +62,6 @@ void add_rezervation(ListRezervari *ls_rez, ListSali *ls_sali, char *nume_sala, 
     }
 }
 
-void cancel_rezervation_beginning(ListRezervari *ls_rez, ListSali *ls_sali) {
-    if(ls_rez->size == 0) {
-        printf("Nu exista rezervari de anulat");
-        return;
-    }
-
-    modify_availability_in_hall(ls_sali, ls_rez->head->nume_sala, true);
-
-    if(ls_rez->size == 1) {
-        free(ls_rez->head->nume_sala);
-        free(ls_rez->head);
-        ls_rez->head = NULL;
-        ls_rez->tail = NULL;
-    } else {
-        Rezervare *newHead = ls_rez->head->next;
-        free(ls_rez->head->nume_sala);
-        free(ls_rez->head);
-        ls_rez->head = newHead;
-        for(Rezervare *tmp = ls_rez->head; tmp != NULL; tmp = tmp->next) {
-            tmp->id--;
-        }
-    }
-    
-    ls_rez->size--;
-}
-
-void cancel_rezervation_end(ListRezervari *ls_rez, ListSali *ls_sali) {
-    if(ls_rez->size == 0) {
-        printf("Nu exista rezervari de anulat");
-        return;
-    }
-
-    modify_availability_in_hall(ls_sali, ls_rez->tail->nume_sala, true);
-
-    if(ls_rez->size == 1) {
-        free(ls_rez->head->nume_sala);
-        free(ls_rez->head);
-        ls_rez->head = NULL;
-        ls_rez->tail = NULL;
-    } else {
-        Rezervare *tmp = ls_rez->head;
-        while(tmp->next != ls_rez->tail) {
-            tmp = tmp->next;
-        }
-        free(tmp->next->nume_sala);
-        free(tmp->next);
-        tmp->next = NULL;
-        ls_rez->tail = tmp;
-    }
-    
-    ls_rez->size--;
-}
-
 void cancel_rezervation(ListRezervari *ls_rez, ListSali *ls_sali, int id) {
     if(id < 1 || id > ls_rez->size) {
         printf("ID invalid");
@@ -128,28 +73,36 @@ void cancel_rezervation(ListRezervari *ls_rez, ListSali *ls_sali, int id) {
         return;
     }
 
-    if(id == 1) { cancel_rezervation_beginning(ls_rez, ls_sali); return; }
-    if(id == ls_rez->size) { cancel_rezervation_end(ls_rez, ls_sali); return; }
-
     Rezervare *tmp = ls_rez->head;
-    while(tmp->id != id - 1) {
+    Rezervare *prev = NULL;
+
+    while (tmp != NULL && tmp->id != id) {
+        prev = tmp;
         tmp = tmp->next;
     }
 
-    modify_availability_in_hall(ls_sali, tmp->next->nume_sala, true);
+    if (tmp == NULL) return; 
 
-    for(Rezervare *tmp2 = tmp->next->next; tmp2 != NULL; tmp2 = tmp2->next) {
+    modify_availability_in_hall(ls_sali, tmp->nume_sala, true);
+
+    if (prev == NULL) {
+        ls_rez->head = tmp->next;
+    } else {
+        prev->next = tmp->next;
+    }
+
+    if (tmp == ls_rez->tail) {
+        ls_rez->tail = prev;
+    }
+
+    for (Rezervare *tmp2 = tmp->next; tmp2 != NULL; tmp2 = tmp2->next) {
         tmp2->id--;
     }
-    
-    Rezervare *toDelete = tmp->next;
-    tmp->next = tmp->next->next;
 
-    free(toDelete->nume_sala);
-    free(toDelete);
+    free(tmp->nume_sala);
+    free(tmp);
 
     ls_rez->size--;
-
 }
 
 void cancel_rezervations_by_hall_name(ListRezervari *ls_rez, char *nume_sala) {

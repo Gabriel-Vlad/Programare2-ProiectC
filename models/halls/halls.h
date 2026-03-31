@@ -25,13 +25,7 @@ typedef struct listsali {
 // adauga o sala la finalul listei
 void add_hall(ListSali *ls_sali, char *nume_sala, int capacitate, bool esteDisponibila);
 
-// sterge o sala de la inceputul listei
-void remove_hall_beginning(ListSali *ls_sali, ListRezervari *ls_rez);
-
-//sterge o sala de la finalul listei
-void remove_hall_end(ListSali *ls_sali, ListRezervari *ls_rez);
-
-// sterge o sala oriunde in lista (se foloseste de cele 2 functii pentru cazurile speciale)
+// sterge o sala
 void remove_hall(ListSali *ls_sali, ListRezervari *ls_rez, int id);
 
 // cauta o sala dupa nume

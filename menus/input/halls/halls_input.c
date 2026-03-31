@@ -1,31 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "input.h"
+#include "halls_input.h"
+#include "../utils/utils.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdbool.h>
-
-static int error_msg(char *msg) {
-    if(msg != NULL) {
-        printf("%s\n", msg);
-        printf("Press ENTER to continue...");
-        getchar();
-    }
-    return -1;
-}
-
-static bool is_pure_number(char *buffer) {
-    char *endptrname;
-    strtol(buffer, &endptrname, 10);
-    return *endptrname == '\0';
-}
-
-static int success_msg(char *msg, bool afiseaza) {
-    printf("%s", msg);
-    if(afiseaza == true) { printf("\nPlease press ENTER to continue..."); }
-    getchar();
-    return 0;
-} 
+#include <stdbool.h> 
 
 int add_hall_parsing(ListSali *ls_sali) {
     char input[256];
@@ -128,11 +107,12 @@ int search_hall_by_name_parsing(ListSali *ls_sali) {
 
         find_hall_by_name(ls_sali, hall_name_buffer);
 
-        return success_msg("", false);
+        return success_msg("", true);
     }
     return -1;
 }
 
+// TODO implement to return multiple halls
 int search_hall_by_capacity_parsing(ListSali *ls_sali) {
     char input[256];
     char capacity_buffer[100];
@@ -155,11 +135,12 @@ int search_hall_by_capacity_parsing(ListSali *ls_sali) {
 
         find_hall_by_capacity(ls_sali, capacity);
 
-        return success_msg("", false);
+        return success_msg("", true);
     }
     return -1;
 }
 
+// TODO implement to return multiple halls
 int search_hall_by_availability_parsing(ListSali *ls_sali) {
     char input[256];
     char availability_buffer[100];
@@ -182,33 +163,7 @@ int search_hall_by_availability_parsing(ListSali *ls_sali) {
 
         find_hall_by_availability(ls_sali, availability);
 
-        return success_msg("", false);
+        return success_msg("", true);
     }
     return -1;
 }
-
-// int add_rezervation_parsing(ListRezervari *ls_rez, ListSali *ls_sali) {
-//     char input[256];
-//     char hall_name_buffer[100];
-//     char hour_buffer[50];
-//     char data_buffer[50];
-//     char extra[256];
-
-//     if(fgets(input, sizeof(input), stdin) != NULL) {
-//         // Check if user chooses to go back
-//         input[strcspn(input, "\n")] = '\0';
-//         if(strcmp(input, "x") == 0) { return 1; }
-
-//         int cnt_parsed_items = sscanf(input, "%s %s %s %s", hall_name_buffer, hour_buffer, data_buffer, extra);
-//         // Check if the input is valid
-//         if(cnt_parsed_items != 3) {
-//             return error_msg("Input invalid. Expected input: <nume_sala> <capacitate> <disponibilitate>\n");
-//         }
-        
-
-//         add_rezervation(ls_rez, ls_sali, hall_name_buffer, hour_buffer, data_buffer);
-
-//         success_msg("Sala a fost adaugata cu succes\n", true);
-//     }
-//     return -1;
-// }

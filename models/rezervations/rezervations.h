@@ -25,13 +25,7 @@ typedef struct listrezervari {
 // adauga o rezervare la finalul listei
 void add_rezervation(ListRezervari *ls_rez, ListSali *ls_sali, char *nume_sala, int ora, int zi, int luna, int an);
 
-// anuleaza o rezervare de la inceput
-void cancel_rezervation_beginning(ListRezervari *ls_rez, ListSali *ls_sali);
-
-// anuleaza o rezervare de la sfarsit
-void cancel_rezervation_end(ListRezervari *ls_rez, ListSali *ls_sali);
-
-// anuleaza o rezervare cerura din lista
+// anuleaza o rezervare
 void cancel_rezervation(ListRezervari *ls_rez, ListSali *ls_sali, int id);
 
 // sterge toate rezervarile asociate unei sali
