@@ -57,6 +57,7 @@ void show_add_room_menu() {
 	printf(COLOR_BORDER "|" COLOR_TITLE "                            ADAUGARE SALA                             " COLOR_BORDER "|" RESET "\n");
 	printf(COLOR_BORDER "|----------------------------------------------------------------------" COLOR_BORDER "|" RESET "\n");
 	printf(COLOR_BORDER "|" COLOR_INFO " %-69s" COLOR_BORDER "|" RESET "\n", "Introduceti datele salii: <nume> <capacitate> <disponibilitate>(Y/N)");
+	printf(COLOR_BORDER "|" COLOR_TEXT " %-69s" COLOR_BORDER "|" RESET "\n", "Exemplu: Amfiteatru 200 Y");
 	printf(COLOR_BORDER "|" COLOR_DANGER " [x] %-65s" COLOR_BORDER "|" RESET "\n", "Inapoi");
 	printf(COLOR_BORDER "|----------------------------------------------------------------------" COLOR_BORDER "|" RESET "\n");
 	printf("\n" COLOR_PROMPT "Alege optiunea: " RESET);
@@ -69,6 +70,7 @@ void show_delete_room_menu() {
 	printf(COLOR_BORDER "|" COLOR_TITLE "              STERGERE SALA               " COLOR_BORDER "|" RESET "\n");
 	printf(COLOR_BORDER "|------------------------------------------|" RESET "\n");
 	printf(COLOR_BORDER "|" COLOR_INFO " %-41s" COLOR_BORDER "|" RESET "\n", "Introduceti ID-ul salii de sters: <ID>");
+	printf(COLOR_BORDER "|" COLOR_TEXT " %-41s" COLOR_BORDER "|" RESET "\n", "Exemplu: 3");
 	printf(COLOR_BORDER "|" COLOR_DANGER " [x] %-37s" COLOR_BORDER "|" RESET "\n", "Inapoi");
 	printf(COLOR_BORDER "|------------------------------------------|" RESET "\n");
 	printf("\n" COLOR_PROMPT "Alege optiunea: " RESET);
@@ -131,6 +133,7 @@ void show_reserve_room_menu() {
 	printf(COLOR_BORDER "|" COLOR_TITLE "                           REZERVARE SALA                            " COLOR_BORDER "|" RESET "\n");
 	printf(COLOR_BORDER "|---------------------------------------------------------------------|" RESET "\n");
 	printf(COLOR_BORDER "|" COLOR_INFO " %-68s" COLOR_BORDER "|" RESET "\n", "Introduceti datele rezervarii: <nume_sala> <ora> <data>(DD/MM/YYYY)");
+	printf(COLOR_BORDER "|" COLOR_TEXT " %-68s" COLOR_BORDER "|" RESET "\n", "Exemplu: Amfiteatru 14 25/12/2026");
 	printf(COLOR_BORDER "|" COLOR_DANGER " [x] %-64s" COLOR_BORDER "|" RESET "\n", "Inapoi");
 	printf(COLOR_BORDER "|---------------------------------------------------------------------|" RESET "\n");
 	printf("\n" COLOR_PROMPT "Alege optiunea: " RESET);
@@ -143,6 +146,7 @@ void show_cancel_reservation_menu() {
 	printf(COLOR_BORDER "|" COLOR_TITLE "              ANULARE REZERVARE               " COLOR_BORDER "|" RESET "\n");
 	printf(COLOR_BORDER "|----------------------------------------------|" RESET "\n");
 	printf(COLOR_BORDER "|" COLOR_INFO " %-45s" COLOR_BORDER "|" RESET "\n", "Introduceti ID-ul rezervarii de anulat: <ID>");
+	printf(COLOR_BORDER "|" COLOR_TEXT " %-45s" COLOR_BORDER "|" RESET "\n", "Exemplu: 2");
 	printf(COLOR_BORDER "|" COLOR_DANGER " [x] %-41s" COLOR_BORDER "|" RESET "\n", "Inapoi");
 	printf(COLOR_BORDER "|----------------------------------------------|" RESET "\n");
 	printf("\n" COLOR_PROMPT "Alege optiunea: " RESET);
