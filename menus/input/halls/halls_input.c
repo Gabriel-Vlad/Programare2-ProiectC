@@ -1,12 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "halls_input.h"
-#include "../utils/utils.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h> 
+#include "includes.h" 
 
-int add_hall_parsing(ListSali *ls_sali) {
+InputResult add_hall_parsing(HallsList *ls_halls) {
     char input[256];
     char hall_name_buffer[100];
     char availability_buffer[50];
@@ -14,44 +9,44 @@ int add_hall_parsing(ListSali *ls_sali) {
     char extra[256];
 
     if(fgets(input, sizeof(input), stdin) != NULL) {
-        // Check if user chooses to go back
+        // Verifica daca utilizatorul vrea sa se intoarca
         input[strcspn(input, "\n")] = '\0';
-        if(strcmp(input, "x") == 0) { return 1; }
+        if(strcmp(input, "x") == 0) { return INPUT_GO_BACK; }
 
         int cnt_parsed_items = sscanf(input, "%s %s %s %s", hall_name_buffer, capacity_buffer, availability_buffer, extra);
-        // Check if the input is valid
+        // Verifica validitatea inputului
         if(cnt_parsed_items != 3) {
-            return error_msg("Input invalid. Expected input: <nume_sala> <capacitate> <disponibilitate>\n");
+            return error_msg("Input invalid. Input preconizat: <nume_sala> <capacitate> <disponibilitate>\n");
         }
-        // Check if <hall_name> is purely a number
+        // Verifica daca numele salii este un numar
         if(is_pure_number(hall_name_buffer) == true) {
-            return error_msg("Input invalid. <hall_name> cannot be a pure number");
+            return error_msg("Input invalid. <nume_sala> nu poate fi un numar\n");
         }
-        // Check if <capacity> is not a number         
+        // Verifica daca capacitatea nu este numar         
         if(is_pure_number(capacity_buffer) == false) {
-            return error_msg("Input invalid. <capacity> has to be a natu");
+            return error_msg("Input invalid. <capacitate> trebuie sa fie un numar natural\n");
         }
-        // Check if <availability> is a valid option
+        // Verifica disponibilitatea
         if(strcmp(availability_buffer, "Y") != 0 && strcmp(availability_buffer, "N") != 0) {
-            return error_msg("Input invalid. <disponibilitate> can only be Y/N\n");
+            return error_msg("Input invalid. <disponibilitate> poate fi doar Y/N\n");
         }
 
         int capacity = atoi(capacity_buffer);
         if(capacity < 0) {
-            return error_msg("Input invalid. <capacitate> trebuie sa fie strict pozitiva");
+            return error_msg("Input invalid. <capacitate> trebuie sa fie strict pozitiva\n");
         }
         
-        // Parse from string to bool
-        bool isAvailable = strcmp(availability_buffer, "N") == 0 ? false : true;
+        // Conversie din string in bool
+        bool is_available = strcmp(availability_buffer, "N") == 0 ? false : true;
 
-        add_hall(ls_sali, hall_name_buffer, capacity, isAvailable);
+        add_hall(ls_halls, hall_name_buffer, capacity, is_available);
 
         success_msg("Sala a fost adaugata cu succes\n", true);
     }
-    return -1;
+    return INPUT_ERROR;
 }
 
-int remove_hall_parsing(ListSali *ls_sali, ListRezervari *ls_rez) {
+InputResult remove_hall_parsing(HallsList *ls_halls, ReservationsList *ls_reservations) {
     char input[256];
     char id_buffer[256];
     char extra[256];
@@ -63,107 +58,105 @@ int remove_hall_parsing(ListSali *ls_sali, ListRezervari *ls_rez) {
         }
 
         int cnt_parsed_items = sscanf(input, "%s %s", id_buffer, extra);
-        // Check if the input is valid
+        // Verifica validitatea inputului
         if(cnt_parsed_items != 1) {
-            return error_msg("Input invalid. Expected input: <ID>\n");
+            return error_msg("Input invalid. Input preconizat: <ID>\n");
         }
 
-        // Check if <ID> is a natural number
+        // Verifica daca ID-ul este numar natural
         if(is_pure_number(id_buffer) == false) {
             return error_msg("Input invalid. <ID> trebuie sa fie un numar natural\n");
         }
         int id = atoi(id_buffer);
 
-        if(id > ls_sali->size || id < 1) {
+        if(id > ls_halls->size || id < 1) {
             char error_message[100];
             snprintf(error_message, sizeof(error_message), "Sala cu ID-ul %d nu exista\n", id);
             return error_msg(error_message);
         }
 
-        remove_hall(ls_sali, ls_rez, id);
+        remove_hall(ls_halls, ls_reservations, id);
 
         return success_msg("Sala a fost stearsa cu succes\n", true);
     }
-    return -1;
+    return INPUT_ERROR;
 }
 
-int search_hall_by_name_parsing(ListSali *ls_sali) {
+InputResult search_hall_by_name_parsing(HallsList *ls_halls) {
     char input[256];
     char hall_name_buffer[100];
     char extra[256];
 
     if(fgets(input, sizeof(input), stdin) != NULL) {
         input[strcspn(input, "\n")] = '\0';
-        if(strcmp(input, "x") == 0) { return 1; }
+        if(strcmp(input, "x") == 0) { return INPUT_GO_BACK; }
 
         int cnt_parsed_items = sscanf(input, "%s %s", hall_name_buffer, extra);
         if(cnt_parsed_items != 1) {
-            return error_msg("Input invalid. Expected input: <hall_name>\n");
+            return error_msg("Input invalid. Input preconizat: <nume_sala>\n");
         }
 
         if(is_pure_number(hall_name_buffer) == true) {
             return error_msg("Input invalid. <nume_sala> nu poate fi un numar\n");
         }
 
-        find_hall_by_name(ls_sali, hall_name_buffer);
+        find_hall_by_name(ls_halls, hall_name_buffer);
 
         return success_msg("", true);
     }
-    return -1;
+    return INPUT_ERROR;
 }
 
-// TODO implement to return multiple halls
-int search_hall_by_capacity_parsing(ListSali *ls_sali) {
+InputResult search_hall_by_capacity_parsing(HallsList *ls_halls) {
     char input[256];
     char capacity_buffer[100];
     char extra[256];
 
     if(fgets(input, sizeof(input), stdin) != NULL) {
         input[strcspn(input, "\n")] = '\0';
-        if(strcmp(input, "x") == 0) { return 1; }
+        if(strcmp(input, "x") == 0) { return INPUT_GO_BACK; }
 
         int cnt_parsed_items = sscanf(input, "%s %s", capacity_buffer, extra);
         if(cnt_parsed_items != 1) {
-            return error_msg("Input invalid. Expected input: <capacity>\n");
+            return error_msg("Input invalid. Input preconizat: <capacitate>\n");
         }
 
         if(is_pure_number(capacity_buffer) == false) {
-            return error_msg("Input invalid. <capacity> trebuie sa fie un numar natural\n");
+            return error_msg("Input invalid. <capacitate> trebuie sa fie un numar natural\n");
         }
 
         int capacity = atoi(capacity_buffer);
 
-        find_hall_by_capacity(ls_sali, capacity);
+        find_hall_by_capacity(ls_halls, capacity);
 
         return success_msg("", true);
     }
-    return -1;
+    return INPUT_ERROR;
 }
 
-// TODO implement to return multiple halls
-int search_hall_by_availability_parsing(ListSali *ls_sali) {
+InputResult search_hall_by_availability_parsing(HallsList *ls_halls) {
     char input[256];
     char availability_buffer[100];
     char extra[256];
 
     if(fgets(input, sizeof(input), stdin) != NULL) {
         input[strcspn(input, "\n")] = '\0';
-        if(strcmp(input, "x") == 0) { return 1; }
+        if(strcmp(input, "x") == 0) { return INPUT_GO_BACK; }
 
         int cnt_parsed_items = sscanf(input, "%s %s", availability_buffer, extra);
         if(cnt_parsed_items != 1) {
-            return error_msg("Input invalid. Expected input: <availability>\n");
+            return error_msg("Input invalid. Input preconizat: <disponibilitate>\n");
         }
 
         if(strcmp(availability_buffer, "Y") != 0 && strcmp(availability_buffer, "N") != 0) {
-            return error_msg("Input invalid. <availability> poate fi Y/N\n");
+            return error_msg("Input invalid. <disponibilitate> poate fi Y/N\n");
         }
 
-        int availability = strcmp(availability_buffer, "Y") == 0 ? true : false;
+        bool availability = strcmp(availability_buffer, "Y") == 0 ? true : false;
 
-        find_hall_by_availability(ls_sali, availability);
+        find_hall_by_availability(ls_halls, availability);
 
         return success_msg("", true);
     }
-    return -1;
+    return INPUT_ERROR;
 }

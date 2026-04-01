@@ -1,12 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "halls.h"
-#include "../rezervations/rezervations.h"
-#include "../../menus/display/display.h"
-#include "../../menus/colors.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
+#include "includes.h"
 
 // Dimensiunile coloanelor tabelului de sali
 #define HALL_COL_COUNT 4
@@ -14,48 +7,48 @@ static int hall_col_widths[HALL_COL_COUNT] = { 4, 20, 10, 15 };
 static char *hall_headers[HALL_COL_COUNT] = { "ID", "Nume Sala", "Capacitate", "Disponibilitate" };
 
 // Afiseaza un rand de sala in format tabel
-static void print_hall_row(Sala *sala) {
+static void print_hall_row(Hall *hall) {
     char id_str[12];
     char cap_str[12];
-    snprintf(id_str, sizeof(id_str), "%d", sala->id);
-    snprintf(cap_str, sizeof(cap_str), "%d", sala->capacitate);
-    char *disp_str = sala->esteDisponibila ? "DA" : "NU";
-    char *values[HALL_COL_COUNT] = { id_str, sala->nume_sala, cap_str, disp_str };
+    snprintf(id_str, sizeof(id_str), "%d", hall->id);
+    snprintf(cap_str, sizeof(cap_str), "%d", hall->capacity);
+    char *disp_str = hall->is_available ? "DA" : "NU";
+    char *values[HALL_COL_COUNT] = { id_str, hall->hall_name, cap_str, disp_str };
     print_row(HALL_COL_COUNT, hall_col_widths, values);
 }
 
-void add_hall(ListSali *ls_sali, char *nume_sala, int capacitate, bool esteDisponibila) {
-    Sala *nou = (Sala *)malloc(sizeof(Sala));
-    if(nou == NULL) {
+void add_hall(HallsList *ls_halls, char *hall_name, int capacity, bool is_available) {
+    Hall *new_hall = (Hall *)malloc(sizeof(Hall));
+    if(new_hall == NULL) {
         printf(COLOR_ERROR "Eroare interna. Nu s-a putut aloca memorie pentru o sala noua\n" RESET);
         return;
     }
 
-    nou->nume_sala = malloc(strlen(nume_sala) + 1);
-    strcpy(nou->nume_sala, nume_sala);
-    nou->capacitate = capacitate;
-    nou->esteDisponibila = esteDisponibila;
-    nou->next = NULL;
+    new_hall->hall_name = malloc(strlen(hall_name) + 1);
+    strcpy(new_hall->hall_name, hall_name);
+    new_hall->capacity = capacity;
+    new_hall->is_available = is_available;
+    new_hall->next = NULL;
     
-    if(ls_sali->size == 0) {
-        ls_sali->head = nou;
-        ls_sali->tail = nou;
+    if(ls_halls->size == 0) {
+        ls_halls->head = new_hall;
+        ls_halls->tail = new_hall;
     } else {
-        ls_sali->tail->next = nou;
-        ls_sali->tail = nou;
+        ls_halls->tail->next = new_hall;
+        ls_halls->tail = new_hall;
     }
-    ls_sali->size++;
-    nou->id = ls_sali->size;
+    ls_halls->size++;
+    new_hall->id = ls_halls->size;
 }
 
-void remove_hall(ListSali *ls_sali, ListRezervari *ls_rez, int id) {
-    if(id < 1 || id > ls_sali->size) {
+void remove_hall(HallsList *ls_halls, ReservationsList *ls_reservations, int id) {
+    if(id < 1 || id > ls_halls->size) {
         printf(COLOR_ERROR "Sala cu ID: %d nu exista\n" RESET, id);
         return;
     }
 
-    Sala *tmp = ls_sali->head;
-    Sala *prev = NULL;
+    Hall *tmp = ls_halls->head;
+    Hall *prev = NULL;
 
     while (tmp != NULL && tmp->id != id) {
         prev = tmp;
@@ -64,107 +57,107 @@ void remove_hall(ListSali *ls_sali, ListRezervari *ls_rez, int id) {
 
     if (tmp == NULL) return;
 
-    cancel_rezervations_by_hall_name(ls_rez, tmp->nume_sala);
+    cancel_reservations_by_hall_name(ls_reservations, tmp->hall_name);
 
     if (prev == NULL) {
-        ls_sali->head = tmp->next;
+        ls_halls->head = tmp->next;
     } else {
         prev->next = tmp->next;
     }
 
-    if (tmp == ls_sali->tail) {
-        ls_sali->tail = prev;
+    if (tmp == ls_halls->tail) {
+        ls_halls->tail = prev;
     }
 
-    for (Sala *tmp2 = tmp->next; tmp2 != NULL; tmp2 = tmp2->next) {
+    for (Hall *tmp2 = tmp->next; tmp2 != NULL; tmp2 = tmp2->next) {
         tmp2->id--;
     }
 
-    free(tmp->nume_sala);
+    free(tmp->hall_name);
     free(tmp);
 
-    ls_sali->size--;
+    ls_halls->size--;
 }
 
-void find_hall_by_name(ListSali *ls_sali, char *nume_sala) {
-    if(ls_sali->size == 0) {
+void find_hall_by_name(HallsList *ls_halls, char *hall_name) {
+    if(ls_halls->size == 0) {
         printf(COLOR_WARNING "Lista de sali este goala\n" RESET);
         return;
     }
 
-    Sala *gasit = NULL;
-    for(Sala *tmp = ls_sali->head; tmp != NULL; tmp = tmp->next) {
-        if(strcmp(tmp->nume_sala, nume_sala) == 0) {
-            gasit = tmp;
+    Hall *found = NULL;
+    for(Hall *tmp = ls_halls->head; tmp != NULL; tmp = tmp->next) {
+        if(strcmp(tmp->hall_name, hall_name) == 0) {
+            found = tmp;
             break;
         }
     }
 
-    if(gasit == NULL) {
-        printf(COLOR_WARNING "Nu exista sala cu numele %s\n" RESET, nume_sala);
+    if(found == NULL) {
+        printf(COLOR_WARNING "Nu exista sala cu numele %s\n" RESET, hall_name);
     } else {
         print_table_header(HALL_COL_COUNT, hall_col_widths, hall_headers);
-        print_hall_row(gasit);
+        print_hall_row(found);
         print_separator(HALL_COL_COUNT, hall_col_widths);
     }
 }
 
-void find_hall_by_capacity(ListSali *ls_sali, int capacitate) {
-    if(ls_sali->size == 0) {
+void find_hall_by_capacity(HallsList *ls_halls, int capacity) {
+    if(ls_halls->size == 0) {
         printf(COLOR_WARNING "Lista de sali este goala\n" RESET);
         return;
     }
 
-    bool gasit = false;
-    for(Sala *tmp = ls_sali->head; tmp != NULL; tmp = tmp->next) {
-        if(tmp->capacitate == capacitate) {
-            if(!gasit) {
+    bool found = false;
+    for(Hall *tmp = ls_halls->head; tmp != NULL; tmp = tmp->next) {
+        if(tmp->capacity == capacity) {
+            if(!found) {
                 print_table_header(HALL_COL_COUNT, hall_col_widths, hall_headers);
             }
-            gasit = true;
+            found = true;
             print_hall_row(tmp);
         }
     }
 
-    if(gasit) {
+    if(found) {
         print_separator(HALL_COL_COUNT, hall_col_widths);
     } else {
-        printf(COLOR_WARNING "Nu exista sala cu capacitatea %d\n" RESET, capacitate);
+        printf(COLOR_WARNING "Nu exista sala cu capacitatea %d\n" RESET, capacity);
     }
 }
 
-void find_hall_by_availability(ListSali *ls_sali, bool esteDisponibila) {
-    if(ls_sali->size == 0) {
+void find_hall_by_availability(HallsList *ls_halls, bool is_available) {
+    if(ls_halls->size == 0) {
         printf(COLOR_WARNING "Lista de sali este goala\n" RESET);
         return;
     }
 
-    bool gasit = false;
-    for(Sala *tmp = ls_sali->head; tmp != NULL; tmp = tmp->next) {
-        if(tmp->esteDisponibila == esteDisponibila) {
-            if(!gasit) {
+    bool found = false;
+    for(Hall *tmp = ls_halls->head; tmp != NULL; tmp = tmp->next) {
+        if(tmp->is_available == is_available) {
+            if(!found) {
                 print_table_header(HALL_COL_COUNT, hall_col_widths, hall_headers);
             }
-            gasit = true;
+            found = true;
             print_hall_row(tmp);
         }
     }
 
-    if(gasit) {
+    if(found) {
         print_separator(HALL_COL_COUNT, hall_col_widths);
     } else {
-        printf(COLOR_WARNING "Nu exista sali %s\n" RESET, esteDisponibila ? "disponibile" : "indisponibile");
+        printf(COLOR_WARNING "Nu exista sali %s\n" RESET, is_available ? "disponibile" : "indisponibile");
     }
 }
 
-void display_halls(ListSali *ls_sali) {
-    if(ls_sali->size == 0) {
+void display_halls(HallsList *ls_halls) {
+    if(ls_halls->size == 0) {
         printf(COLOR_WARNING "Nu exista sali de afisat\n" RESET);
         return;
     }
 
     print_table_header(HALL_COL_COUNT, hall_col_widths, hall_headers);
-    for(Sala *tmp = ls_sali->head; tmp != NULL; tmp = tmp->next) {
+    for(Hall *tmp = ls_halls->head; tmp != NULL; tmp = tmp->next) {
         print_hall_row(tmp);
     }
     print_separator(HALL_COL_COUNT, hall_col_widths);

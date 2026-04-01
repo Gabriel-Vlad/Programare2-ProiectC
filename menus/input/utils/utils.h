@@ -3,8 +3,14 @@
 
 #include <stdbool.h>
 
-int error_msg(char *msg);
+typedef enum {
+    INPUT_ERROR = -1,
+    INPUT_SUCCESS = 0,
+    INPUT_GO_BACK = 1
+} InputResult;
+
+InputResult error_msg(char *msg);
 bool is_pure_number(char *buffer);
-int success_msg(char *msg, bool afiseaza);
+InputResult success_msg(char *msg, bool display);
 
 #endif

@@ -1,6 +1,4 @@
-#include "display.h"
-#include "../colors.h"
-#include <stdio.h>
+#include "includes.h"
 
 void print_separator(int col_count, int *col_widths) {
     printf(COLOR_TABLE_BRD "|");

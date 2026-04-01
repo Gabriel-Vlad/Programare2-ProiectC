@@ -1,8 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "menus.h"
-#include "colors.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "includes.h"
 
 void clear_screen() { system("cls"); }
 

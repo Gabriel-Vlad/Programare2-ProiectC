@@ -1,43 +1,43 @@
-#ifndef SALI_H
-#define SALI_H
+#ifndef HALLS_H
+#define HALLS_H
 
 #include <stdbool.h>
 
-typedef struct rezervare Rezervare;
-typedef struct listrezervari ListRezervari;
+typedef struct reservation Reservation;
+typedef struct reservationslist ReservationsList;
 
-// structura unei sali
-typedef struct sala {
+// Structura unei sali
+typedef struct hall {
     int id;
-    int capacitate;
-    char *nume_sala;
-    bool esteDisponibila;
-    struct sala *next;
-} Sala;
+    int capacity;
+    char *hall_name;
+    bool is_available;
+    struct hall *next;
+} Hall;
 
-// structura unei liste de sali
-typedef struct listsali {
-    Sala *head;
-    Sala *tail;
+// Structura unei liste de sali
+typedef struct hallslist {
+    Hall *head;
+    Hall *tail;
     int size;
-} ListSali;
+} HallsList;
 
-// adauga o sala la finalul listei
-void add_hall(ListSali *ls_sali, char *nume_sala, int capacitate, bool esteDisponibila);
+// Adauga o sala la finalul listei
+void add_hall(HallsList *ls_halls, char *hall_name, int capacity, bool is_available);
 
-// sterge o sala
-void remove_hall(ListSali *ls_sali, ListRezervari *ls_rez, int id);
+// Sterge o sala
+void remove_hall(HallsList *ls_halls, ReservationsList *ls_reservations, int id);
 
-// cauta o sala dupa nume
-void find_hall_by_name(ListSali *ls_sali, char *nume_sala);
+// Cauta o sala dupa nume
+void find_hall_by_name(HallsList *ls_halls, char *hall_name);
 
-//cauta o sala dupa capacitate
-void find_hall_by_capacity(ListSali *ls_sali, int capacitate);
+// Cauta o sala dupa capacitate
+void find_hall_by_capacity(HallsList *ls_halls, int capacity);
 
-// cauta o sala dupa disponibilitate
-void find_hall_by_availability(ListSali *ls_sali, bool disponibila);
+// Cauta o sala dupa disponibilitate
+void find_hall_by_availability(HallsList *ls_halls, bool is_available);
 
-// afiseaza toate salile
-void display_halls(ListSali *ls_sali);
+// Afiseaza toate salile
+void display_halls(HallsList *ls_halls);
 
 #endif

@@ -1,13 +1,14 @@
 #ifndef HALLS_INPUT_H
 #define HALLS_INPUT_H
 
-#include "../../../models/halls/halls.h"
-#include "../../../models/rezervations/rezervations.h"
+#include "models/halls/halls.h"
+#include "models/reservations/reservations.h"
+#include "menus/input/utils/utils.h"
 
-int add_hall_parsing(ListSali *ls_sali);
-int remove_hall_parsing(ListSali *ls_sali, ListRezervari *ls_rez);
-int search_hall_by_name_parsing(ListSali *ls_sali);
-int search_hall_by_capacity_parsing(ListSali *ls_sali);
-int search_hall_by_availability_parsing(ListSali *ls_sali);
+InputResult add_hall_parsing(HallsList *ls_halls);
+InputResult remove_hall_parsing(HallsList *ls_halls, ReservationsList *ls_reservations);
+InputResult search_hall_by_name_parsing(HallsList *ls_halls);
+InputResult search_hall_by_capacity_parsing(HallsList *ls_halls);
+InputResult search_hall_by_availability_parsing(HallsList *ls_halls);
 
 #endif
