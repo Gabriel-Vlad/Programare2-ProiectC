@@ -1,5 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "includes.h"
+#include "models/reservations/reservations.h"
+#include "models/halls/halls.h"
+#include "menus/display/display.h"
+#include "menus/colors.h"
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 
 // Dimensiunile coloanelor tabelului de rezervari
 #define REZ_COL_COUNT 4
@@ -48,7 +55,7 @@ void add_reservation(ReservationsList *ls_reservations, HallsList *ls_halls, cha
 
     Reservation *nou = (Reservation *)malloc(sizeof(Reservation));
     if(nou == NULL) {
-        printf(COLOR_ERROR "Nu s-a putut aloca memorie pentru o rezervare noua" RESET);
+        printf(COLOR_ERROR "Nu s-a putut aloca memorie pentru o rezervare noua\n" RESET);
         return;
     }
 
@@ -75,12 +82,12 @@ void add_reservation(ReservationsList *ls_reservations, HallsList *ls_halls, cha
 
 void cancel_reservation(ReservationsList *ls_reservations, HallsList *ls_halls, int id) {
     if(id < 1 || id > ls_reservations->size) {
-        printf(COLOR_ERROR "ID invalid" RESET);
+        printf(COLOR_ERROR "ID invalid\n" RESET);
         return;
     }
 
     if(ls_reservations->size == 0) {
-        printf(COLOR_WARNING "Nu exista rezervari" RESET);
+        printf(COLOR_WARNING "Nu exista rezervari\n" RESET);
         return;
     }
 

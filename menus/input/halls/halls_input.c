@@ -1,5 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "includes.h" 
+#include "menus/input/halls/halls_input.h"
+#include "menus/input/utils/utils.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h> 
 
 InputResult add_hall_parsing(HallsList *ls_halls) {
     char input[256];

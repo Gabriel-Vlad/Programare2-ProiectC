@@ -1,5 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "includes.h"
+#include "models/halls/halls.h"
+#include "models/reservations/reservations.h"
+#include "menus/display/display.h"
+#include "menus/colors.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
 // Dimensiunile coloanelor tabelului de sali
 #define HALL_COL_COUNT 4

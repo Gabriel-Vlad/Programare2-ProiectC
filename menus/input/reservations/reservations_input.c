@@ -1,5 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "includes.h"
+#include "menus/input/reservations/reservations_input.h"
+#include "menus/input/utils/utils.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 InputResult add_reservation_parsing(ReservationsList *ls_reservations, HallsList *ls_halls) {
     char input[256];

@@ -1,5 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "includes.h"
+#include "menus/menus.h"
+#include "menus/colors.h"
+#include "models/reservations/reservations.h"
+#include "models/halls/halls.h"
+#include "menus/input/halls/halls_input.h"
+#include "menus/input/reservations/reservations_input.h"
+#include "database/database.h"
+#include <stdio.h>
 
 int main(void) {
 	read_data();

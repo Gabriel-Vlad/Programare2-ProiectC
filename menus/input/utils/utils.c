@@ -1,4 +1,7 @@
-#include "includes.h"
+#include "menus/input/utils/utils.h"
+#include "menus/colors.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 InputResult error_msg(char *msg) {
     if(msg != NULL) {
