@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 
 InputResult add_reservation_parsing(ReservationsList *ls_reservations, HallsList *ls_halls) {
     char input[256];
@@ -43,6 +44,29 @@ InputResult add_reservation_parsing(ReservationsList *ls_reservations, HallsList
         
         if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900) {
             return error_msg("Input invalid. Data invalida\n");
+        }
+
+        time_t t_now = time(NULL);
+        struct tm *tm_now = localtime(&t_now);
+        
+        struct tm tm_current_hour_trunc = *tm_now;
+        tm_current_hour_trunc.tm_min = 0;
+        tm_current_hour_trunc.tm_sec = 0;
+        time_t t_current_hour_trunc = mktime(&tm_current_hour_trunc);
+
+        struct tm tm_input = {0};
+        tm_input.tm_year = year - 1900;
+        tm_input.tm_mon = month - 1;
+        tm_input.tm_mday = day;
+        tm_input.tm_hour = hour;
+        tm_input.tm_min = 0;
+        tm_input.tm_sec = 0;
+        tm_input.tm_isdst = -1;
+
+        time_t t_input = mktime(&tm_input);
+
+        if (t_input < t_current_hour_trunc) {
+             return error_msg("Input invalid. Data si ora rezervarii nu pot fi in trecut\n");
         }
 
         Hall *hall_to_reserve = NULL;
